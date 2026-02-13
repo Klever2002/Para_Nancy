@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>🌹 20/12/22 · Nancy · Nuestra Historia 🌹</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* === RESET Y CONFIGURACIÓN === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0712;
+            color: white;
+        }
+
+        /* === FONDO CÓSMICO SUAVE === */
+        #cosmic-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* === CONTENEDOR PRINCIPAL === */
+        #app {
+            position: relative;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 16px;
+        }
+
+        /* === MARCO DE FOTOS - MÁS GRANDE === */
+        .photo-frame {
+            width: min(320px, 75vw);
+            height: min(400px, 90vw);
+            position: relative;
+            margin-bottom: 20px;
+            border-radius: 28px;
+            box-shadow: 0 18px 35px -8px rgba(0,0,0,0.8), 0 0 0 3px rgba(255,200,220,0.7), 0 0 45px #ff9eb5;
+            display: none;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 25px;
+            display: block;
+        }
+
+        /* === ANIMACIONES DE FOTOS - FLUIDAS === */
+        .fx-supernova { 
+            animation: supernova 1.4s cubic-bezier(0.23, 1, 0.32, 1) forwards; 
+        }
+        @keyframes supernova {
+            0% { clip-path: circle(0% at 50% 50%); opacity: 0; transform: scale(0.7) rotate(-5deg); filter: blur(12px) brightness(1.5); }
+            60% { clip-path: circle(100% at 50% 50%); opacity: 0.95; transform: scale(1.03) rotate(2deg); filter: blur(2px) brightness(1.2); }
+            100% { clip-path: circle(150% at 50% 50%); opacity: 1; transform: scale(1) rotate(0); filter: blur(0) brightness(1); }
+        }
+
+        .fx-sunset { 
+            animation: sunset 1.3s cubic-bezier(0.21, 1.11, 0.41, 1) forwards; 
+        }
+        @keyframes sunset {
+            0% { transform: translateY(120vh) rotate(-10deg); opacity: 0; filter: sepia(1) blur(10px); }
+            70% { transform: translateY(-10px) rotate(3deg); opacity: 0.98; filter: sepia(0.3) blur(2px); }
+            100% { transform: translateY(0) rotate(0); opacity: 1; filter: sepia(0) blur(0); }
+        }
+
+        .fx-starfall { 
+            animation: starfall 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; 
+        }
+        @keyframes starfall {
+            0% { transform: translateX(-200px) translateY(-200px) rotate(-45deg); opacity: 0; filter: drop-shadow(0 0 30px gold) blur(12px); }
+            80% { transform: translateX(15px) translateY(15px) rotate(3deg); opacity: 0.98; filter: drop-shadow(0 0 15px #ffb3b3) blur(2px); }
+            100% { transform: translateX(0) translateY(0) rotate(0); opacity: 1; filter: drop-shadow(0 0 5px #ffe0f0) blur(0); }
+        }
+
+        .fx-heartbeat { 
+            animation: heartbeat 2s infinite alternate cubic-bezier(0.455, 0.03, 0.515, 0.955); 
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); box-shadow: 0 0 25px #ff8aa1, 0 0 0 3px #ffb7c5; }
+            100% { transform: scale(1.04); box-shadow: 0 0 55px #ff5e7e, 0 0 0 5px #ffe2ec; }
+        }
+
+        .fx-dawn { 
+            animation: dawn 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
+        }
+        @keyframes dawn {
+            0% { opacity: 0; transform: rotateY(180deg) scale(0.7); filter: blur(15px) brightness(0.8); }
+            70% { opacity: 0.98; transform: rotateY(20deg) scale(1.03); filter: blur(4px) brightness(1.1); }
+            100% { opacity: 1; transform: rotateY(0) scale(1); filter: blur(0) brightness(1); }
+        }
+
+        /* === TARJETA DE TEXTO - MÁS GRANDE Y ORDENADA === */
+        .memory-card {
+            background: rgba(18, 12, 26, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 36px;
+            padding: 26px 30px;
+            width: min(600px, 95%);
+            border: 2px solid rgba(255, 200, 220, 0.6);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            font-weight: 400;
+            color: #ffe6f0;
+            text-shadow: 0 0 18px #ff99b6, 0 0 35px #ffb3c6, 0 0 60px #ff8aa1;
+            margin-bottom: 12px;
+            letter-spacing: 1.5px;
+            opacity: 0;
+            animation: fadeTitle 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            text-align: left;
+            word-break: break-word;
+        }
+        @keyframes fadeTitle {
+            0% { opacity: 0; transform: translateY(-12px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .story-box {
+            min-height: 170px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        #story-text {
+            font-size: 1.45rem;
+            line-height: 1.65;
+            font-weight: 500;
+            color: #ffffff;
+            text-shadow: 0 3px 8px rgba(0,0,0,0.9);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 24px;
+            border-radius: 28px;
+            font-family: 'Cormorant Garamond', serif;
+            border-left: 6px solid #ffb8c9;
+            width: 100%;
+            letter-spacing: 0.4px;
+            text-align: left;
+            word-break: break-word;
+            white-space: pre-wrap;
+            box-shadow: inset 0 0 20px rgba(255,200,220,0.1);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 4px;
+            height: 1.9rem;
+            background: linear-gradient(180deg, #ffccdd, #ff99bb);
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+            box-shadow: 0 0 15px #ffb3d9;
+            animation: blink 0.9s infinite ease-in-out;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; transform: scaleY(1); }
+            50% { opacity: 0.3; transform: scaleY(1.3); }
+        }
+
+        /* === BOTÓN - FLUIDO === */
+        .btn-love {
+            margin-top: 22px;
+            padding: 14px 38px;
+            background: linear-gradient(145deg, #c45a7a, #6e2c44);
+            border: 2.5px solid #ffe6f0;
+            border-radius: 60px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            box-shadow: 0 7px 0 #3a1e26, 0 0 40px #ff8aae, 0 0 15px #ffb3c6 inset;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeBtn 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            animation-delay: 1.4s;
+            transition: transform 0.12s cubic-bezier(0.18, 0.89, 0.32, 1.28), box-shadow 0.2s;
+            -webkit-touch-callout: none;
+        }
+        .btn-love:active {
+            transform: scale(0.92);
+            box-shadow: 0 3px 0 #3a1e26, 0 0 50px #ffb3c6, 0 0 20px #ffb3c6 inset;
+        }
+        @keyframes fadeBtn {
+            0% { opacity: 0; transform: translateY(18px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === PARTÍCULAS FLOTANTES === */
+        #floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0;
+            color: #fff0f5;
+            filter: drop-shadow(0 0 12px #ffb3c6);
+            animation: float linear infinite;
+            will-change: transform;
+        }
+        @keyframes float {
+            0% { transform: translateY(110vh) scale(0.3) rotate(0deg); opacity: 0.2; }
+            40% { opacity: 0.7; transform: rotate(180deg); }
+            100% { transform: translateY(-15vh) scale(1.3) rotate(360deg); opacity: 0; }
+        }
+
+        /* === 🎆 GRAN FINAL - COLLAGE PEQUEÑO CON ANIMACIONES ESPECTACULARES 🎆 === */
+        .final-ceremony {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #0c0715, #020003);
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(12px);
+            padding: 12px;
+        }
+
+        .final-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: #ffeaf2;
+            text-shadow: 0 0 25px #ff3b6f, 0 0 50px #ff6f91, 0 0 80px #ff99bb;
+            margin-bottom: 10px;
+            text-align: center;
+            padding: 0 8px;
+            animation: romanticGlow 2.8s infinite alternate ease-in-out;
+        }
+        @keyframes romanticGlow {
+            0% { text-shadow: 0 0 20px #ff3b6f, 0 0 40px #ff6f91; transform: scale(1); }
+            100% { text-shadow: 0 0 35px #ff1a4f, 0 0 70px #ff8aa1, 0 0 110px #ffb3c6; transform: scale(1.02); }
+        }
+
+        /* === COLLAGE SUPER PEQUEÑO - PERFECTAMENTE VISIBLE === */
+        .collage-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            width: 70%;
+            max-width: 380px;
+            margin: 8px auto;
+            padding: 12px;
+            background: rgba(255, 200, 220, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            border: 2px solid rgba(255, 190, 210, 0.7);
+            box-shadow: 0 0 40px rgba(255, 128, 149, 0.5);
+        }
+
+        /* === ANIMACIONES ESPECTACULARES PARA CADA FOTO === */
+        .collage-img {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 16px 6px 16px 6px;
+            border: 3px solid #ffccd9;
+            object-fit: cover;
+            animation: magicReveal 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            transform: scale(0);
+            box-shadow: 0 0 20px #ff7a9e;
+            position: relative;
+        }
+
+        @keyframes magicReveal {
+            0% { 
+                transform: scale(0) rotate(-30deg) translateY(30px); 
+                opacity: 0; 
+                filter: blur(12px) brightness(1.8);
+                box-shadow: 0 0 0px #ff99bb;
+            }
+            60% { 
+                transform: scale(1.12) rotate(6deg) translateY(-5px); 
+                opacity: 0.95; 
+                filter: blur(0) brightness(1.2);
+                box-shadow: 0 0 40px #ff6f91;
+            }
+            100% { 
+                transform: scale(1) rotate(0deg) translateY(0); 
+                opacity: 1; 
+                filter: blur(0) brightness(1);
+                box-shadow: 0 0 25px #ff7a9e;
+            }
+        }
+
+        /* HOVER MÁGICO - EFECTO 3D ESPECTACULAR */
+        .collage-img:hover {
+            transform: scale(1.15) rotate(5deg) !important;
+            border-color: #ffe6f0;
+            box-shadow: 0 0 50px #ff99bb, 0 15px 25px rgba(0,0,0,0.5);
+            z-index: 100;
+            transition: all 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        /* CADA FOTO TIENE SU PROPIO DELAY Y ESTILO */
+        .collage-img:nth-child(3n+1) {
+            animation-delay: 0.1s;
+            border-color: #ffb3c6;
+        }
+        .collage-img:nth-child(3n+2) {
+            animation-delay: 0.2s;
+            border-color: #ffc0cb;
+        }
+        .collage-img:nth-child(3n+3) {
+            animation-delay: 0.3s;
+            border-color: #ffccd9;
+        }
+        .collage-img:nth-child(5n+1) { animation-duration: 0.8s; }
+        .collage-img:nth-child(5n+2) { animation-duration: 0.75s; }
+        .collage-img:nth-child(5n+3) { animation-duration: 0.85s; }
+        .collage-img:nth-child(5n+4) { animation-duration: 0.7s; }
+        .collage-img:nth-child(5n+5) { animation-duration: 0.9s; }
+
+        /* MENSAJE FINAL - ELEGANTE Y LLAMATIVO */
+        .final-message {
+            font-size: 1.6rem;
+            color: #fff5fa;
+            text-shadow: 0 0 20px #ff3b6f, 0 0 45px #ff6f91, 0 0 70px #ff99bb;
+            margin-top: 12px;
+            font-family: 'Great Vibes', cursive;
+            background: rgba(40, 15, 35, 0.85);
+            padding: 10px 28px;
+            border-radius: 60px;
+            backdrop-filter: blur(14px);
+            border: 2.5px solid #ffccd9;
+            letter-spacing: 2px;
+            text-align: center;
+            animation: pulseMessage 2.2s infinite alternate;
+            box-shadow: 0 0 35px rgba(255, 128, 149, 0.7);
+        }
+        @keyframes pulseMessage {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 25px #ff7a9e, 0 0 15px #ff99bb inset; }
+            50% { transform: scale(1.04); box-shadow: 0 0 50px #ff3f6b, 0 0 80px #ff8aa1, 0 0 30px #ff99bb inset; }
+        }
+
+        /* === RESPONSIVE PERFECTO - TEXTO MÁS GRANDE EN MÓVIL === */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.3rem; }
+            #story-text { 
+                font-size: 1.25rem; 
+                padding: 18px 22px; 
+                line-height: 1.6;
+            }
+            .memory-card {
+                padding: 22px 26px;
+            }
+            .btn-love { 
+                font-size: 1.05rem; 
+                padding: 12px 30px; 
+                letter-spacing: 2.5px; 
+            }
+            .photo-frame { 
+                width: 280px; 
+                height: 350px; 
+            }
+            .final-title { 
+                font-size: 1.9rem; 
+            }
+            .collage-grid { 
+                width: 80%; 
+                gap: 6px; 
+                padding: 10px;
+                max-width: 340px;
+            }
+            .final-message { 
+                font-size: 1.4rem; 
+                padding: 9px 22px; 
+            }
+        }
+        @media (max-width: 380px) {
+            .photo-frame { 
+                width: 240px; 
+                height: 300px; 
+            }
+            h1 { 
+                font-size: 2rem; 
+            }
+            #story-text { 
+                font-size: 1.15rem; 
+                padding: 16px 20px; 
+            }
+            .memory-card {
+                padding: 18px 22px;
+            }
+            .collage-grid { 
+                width: 88%; 
+                gap: 5px; 
+                padding: 8px; 
+            }
+            .final-title { 
+                font-size: 1.6rem; 
+            }
+            .final-message { 
+                font-size: 1.2rem; 
+                padding: 8px 18px; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="cosmic-canvas"></canvas>
+    <div id="floating-particles"></div>
+
+    <div id="app">
+        <div id="photoContainer" class="photo-frame">
+            <img id="photoImage" src="" alt="momento especial">
+        </div>
+
+        <div class="memory-card">
+            <h1 id="title">Cargando...</h1>
+            <div class="story-box">
+                <span id="story-text"></span>
+                <span class="cursor"></span>
+            </div>
+        </div>
+
+        <button id="nextButton" class="btn-love">✨ Comenzar ✨</button>
+    </div>
+
+    <!-- 🎆 FINAL - COLLAGE PEQUEÑO CON ANIMACIONES ESPECTACULARES 🎆 -->
+    <div id="finalScreen" class="final-ceremony">
+        <h2 class="final-title">Nancy, nuestra historia brilla ✨</h2>
+        <div id="collageContainer" class="collage-grid"></div>
+        <div class="final-message">💖 20/12/22 · Te amo · Por siempre 💖</div>
+    </div>
+
+    <script>
+        (function(){
+            "use strict";
+
+            // ============================================
+            // 🌟 TUS 5 FOTOS - MISMO NOMBRE
+            // ============================================
+            const MIS_FOTOS = [
+                "foto1.jpeg",
+                "foto2.jpeg",
+                "foto3.jpeg", 
+                "foto4.jpeg",
+                "foto5.jpeg"
+            ];
+
+            // ============================================
+            // 💖 HISTORIA - TEXTO CORREGIDO Y ORDENADO
+            // ============================================
+            const timeline = [
+                {
+                    title: "20.12.22",
+                    text: "Ese día el universo cambió para siempre. Tu sonrisa iluminó mi cielo gris y desde entonces cada latido lleva tu nombre. No fue casualidad, fue magia. Fue el día que mi alma reconoció a la suya.",
+                    img: null,
+                    bg: 'galaxy',
+                    particles: ['✨','⭐','🌠','💫'],
+                    fx: '',
+                    btn: '🌌 Nuestra historia'
+                },
+                {
+                    title: "Constelación Nancy",
+                    text: "Mirá esta foto, mi amor. Así reconstruiste mi corazón: con paciencia, con ternura, con esa forma tuya de amar sin condiciones. Antes de vos no creía en almas gemelas. Ahora sé que existen porque vos sos la mía.",
+                    img: MIS_FOTOS[0],
+                    bg: 'sunset',
+                    particles: ['☀️','🌸','✨','🌻'],
+                    fx: 'fx-supernova',
+                    btn: '💫 Siguiente'
+                },
+                {
+                    title: "Tu esencia",
+                    text: "Te admiro tanto que a veces me duele el pecho. Verte ayudar a tus papás, estudiar hasta tarde, soñar con un futuro mejor. Sos luz pura, sos mi orgullo más grande. Ojalá pudieras verte con mis ojos: te enamorarías de vos misma.",
+                    img: MIS_FOTOS[1],
+                    bg: 'nature',
+                    particles: ['🍃','🌙','🌟','🕊️'],
+                    fx: 'fx-sunset',
+                    btn: '🌙 Continuar'
+                },
+                {
+                    title: "Tus sueños",
+                    text: "No te rindas nunca, princesa. Diosito está armando algo hermoso con tu esfuerzo. Tus metas son mis metas. Tu dolor, mi dolor. Tu alegría, mi fiesta. Vas a llegar muy lejos y yo voy a estar aplaudiendo cada paso que des.",
+                    img: MIS_FOTOS[2],
+                    bg: 'dream',
+                    particles: ['☁️','⭐','🕯️','🌠'],
+                    fx: 'fx-starfall',
+                    btn: '✨ Seguir'
+                },
+                {
+                    title: "La distancia",
+                    text: "Cada minuto sin vos se vuelve eterno. Extraño tu risa, tus ocurrencias, cómo fruncís el ceño cuando te concentrás. Gracias por ser esa chica estudiosa que nunca se rinde. Estoy tan orgulloso que el pecho me explota de amor.",
+                    img: MIS_FOTOS[3],
+                    bg: 'love',
+                    particles: ['❤️','💗','💘','💖'],
+                    fx: 'fx-heartbeat',
+                    btn: '💘 Falta poco'
+                },
+                {
+                    title: "San Valentín",
+                    text: "Hoy te regalo este ramo de promesas: voy a cuidarte, a elegirte cada día, a bancar todas tus locuras. Sos el amor de mi vida, Nancy. Y no es una frase hecha: es la verdad más grande que tengo en el alma.",
+                    img: MIS_FOTOS[4],
+                    bg: 'dawn',
+                    particles: ['🌹','🌸','💐','🌷'],
+                    fx: 'fx-dawn',
+                    btn: '💍 Te Amo'
+                }
+            ];
+
+            // ============================================
+            // 🚀 ELEMENTOS DEL DOM
+            // ============================================
+            const canvas = document.getElementById('cosmic-canvas');
+            const ctx = canvas.getContext('2d');
+            const photoFrame = document.getElementById('photoContainer');
+            const photoImg = document.getElementById('photoImage');
+            const titleEl = document.getElementById('title');
+            const storyEl = document.getElementById('story-text');
+            const nextBtn = document.getElementById('nextButton');
+            const particleContainer = document.getElementById('floating-particles');
+            const finalScreen = document.getElementById('finalScreen');
+            const collageGrid = document.getElementById('collageContainer');
+
+            let currentSlide = 0;
+            let bgMode = 'galaxy';
+            let animFrame;
+
+            // ============================================
+            // 📱 REDIMENSIONAR CANVAS
+            // ============================================
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            // ============================================
+            // 🎨 FONDO DINÁMICO - OPTIMIZADO
+            // ============================================
+            function drawBackground() {
+                if (!ctx) return;
+                const w = canvas.width;
+                const h = canvas.height;
+                ctx.clearRect(0, 0, w, h);
+
+                if (bgMode === 'galaxy') {
+                    const grad = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w/1.4);
+                    grad.addColorStop(0, '#2a1e3a');
+                    grad.addColorStop(1, '#0c0812');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(0, 0, w, h);
+                    for (let i = 0; i < 40; i++) {
+                        ctx.fillStyle = `rgba(255,200,230,${Math.random() * 0.4})`;
+                        ctx.beginPath();
+                        ctx.arc(Math.random() * w, Math.random() * h, 1.3, 0, 2 * Math.PI);
+                        ctx.fill();
+                    }
+                } else if (bgMode === 'sunset') {
+                    const grad = ctx.createLinearGradient(0, 0, 0, h);
+                    grad.addColorStop(0, '#5a2e4a');
+                    grad.addColorStop(0.6, '#c27e7a');
+                    grad.addColorStop(1, '#fadbc4');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(0, 0, w, h);
+                } else if (bgMode === 'nature') {
+                    ctx.fillStyle = '#1e3a2a';
+                    ctx.fillRect(0, 0, w, h);
+                } else if (bgMode === 'dream') {
+                    const grad = ctx.createLinearGradient(0, 0, w, 0);
+                    grad.addColorStop(0, '#352d4a');
+                    grad.addColorStop(1, '#5e4e6b');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(0, 0, w, h);
+                } else if (bgMode === 'love') {
+                    const grad = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w/1.3);
+                    grad.addColorStop(0, '#75203a');
+                    grad.addColorStop(0.9, '#2d121b');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(0, 0, w, h);
+                } else if (bgMode === 'dawn') {
+                    const grad = ctx.createLinearGradient(0, 0, 0, h);
+                    grad.addColorStop(0, '#4a334b');
+                    grad.addColorStop(0.7, '#d1968f');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(0, 0, w, h);
+                }
+
+                animFrame = requestAnimationFrame(drawBackground);
+            }
+
+            // ============================================
+            // ✨ PARTÍCULAS FLOTANTES
+            // ============================================
+            function createParticles(emojis) {
+                particleContainer.innerHTML = '';
+                for (let i = 0; i < 25; i++) {
+                    const p = document.createElement('span');
+                    p.className = 'particle';
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.animationDuration = (Math.random() * 6 + 7) + 's';
+                    p.style.animationDelay = (Math.random() * 4) + 's';
+                    p.style.fontSize = (Math.floor(Math.random() * 26) + 18) + 'px';
+                    p.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                    particleContainer.appendChild(p);
+                }
+            }
+
+            // ============================================
+            // ⌨️ MÁQUINA DE ESCRIBIR - FLUIDA Y RÁPIDA
+            // ============================================
+            function typeWriter(text, index = 0) {
+                if (index < text.length) {
+                    storyEl.innerHTML += text.charAt(index);
+                    setTimeout(() => typeWriter(text, index + 1), 25);
+                } else {
+                    nextBtn.style.opacity = '1';
+                }
+            }
+
+            // ============================================
+            // 🖼️ RENDERIZAR SLIDE
+            // ============================================
+            function renderSlide(index) {
+                const slide = timeline[index];
+                
+                titleEl.style.opacity = '0';
+                setTimeout(() => {
+                    titleEl.innerText = slide.title;
+                    titleEl.style.opacity = '1';
+                }, 80);
+                
+                storyEl.innerHTML = '';
+                setTimeout(() => typeWriter(slide.text), 250);
+                
+                bgMode = slide.bg;
+                createParticles(slide.particles);
+                
+                if (slide.img) {
+                    photoFrame.style.display = 'block';
+                    photoImg.src = slide.img;
+                    photoImg.classList.remove('fx-supernova', 'fx-sunset', 'fx-starfall', 'fx-heartbeat', 'fx-dawn');
+                    void photoImg.offsetWidth;
+                    if (slide.fx) photoImg.classList.add(slide.fx);
+                } else {
+                    photoFrame.style.display = 'none';
+                }
+                
+                nextBtn.innerText = slide.btn;
+            }
+
+            // ============================================
+            // ⏭️ SIGUIENTE SLIDE
+            // ============================================
+            function nextSlide() {
+                if (currentSlide < timeline.length - 1) {
+                    currentSlide++;
+                    renderSlide(currentSlide);
+                } else {
+                    showFinalCollage();
+                }
+            }
+
+            // ============================================
+            // 🎆 FINAL - COLLAGE PEQUEÑO CON ANIMACIONES ESPECTACULARES
+            // ============================================
+            function showFinalCollage() {
+                finalScreen.style.opacity = '1';
+                finalScreen.style.pointerEvents = 'auto';
+                nextBtn.style.opacity = '0';
+                nextBtn.style.pointerEvents = 'none';
+
+                collageGrid.innerHTML = '';
+                
+                const fotosDisponibles = MIS_FOTOS.filter(f => f && f !== "");
+                
+                if (fotosDisponibles.length === 0) {
+                    collageGrid.innerHTML = '<div style="color:white; padding:20px; text-align:center; font-size:1.3rem; font-family:Great Vibes;">✨ Tus fotos están aquí ✨</div>';
+                } else {
+                    // COLLAGE PEQUEÑO - 3 repeticiones
+                    const todasLasFotos = [];
+                    for (let i = 0; i < 3; i++) {
+                        fotosDisponibles.forEach(foto => { todasLasFotos.push(foto); });
+                    }
+                    
+                    const fotosMezcladas = todasLasFotos.sort(() => Math.random() - 0.5);
+                    
+                    fotosMezcladas.forEach((src, idx) => {
+                        const img = document.createElement('img');
+                        img.src = src;
+                        img.alt = `recuerdo ${idx+1}`;
+                        img.className = 'collage-img';
+                        img.style.animationDelay = (idx * 0.035) + 's';
+                        collageGrid.appendChild(img);
+                    });
+                }
+            }
+
+            // ============================================
+            // 🚀 INICIAR APLICACIÓN
+            // ============================================
+            function init() {
+                renderSlide(0);
+                animFrame = requestAnimationFrame(drawBackground);
+                nextBtn.addEventListener('click', nextSlide);
+            }
+
+            init();
+
+            window.addEventListener('beforeunload', () => {
+                cancelAnimationFrame(animFrame);
+            });
+        })();
+    </script>
+</body>
+</html>
